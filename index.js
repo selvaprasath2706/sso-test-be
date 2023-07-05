@@ -3,11 +3,20 @@ const passport = require("passport");
 const SamlStrategy = require("passport-saml").Strategy;
 var bodyParser = require("body-parser");
 require("dotenv").config();
+const session = require("express-session");
 
 const app = express();
 
 app.use(bodyParser.json({ limit: "5mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(
+  session({
+    secret: process.env.secret, // Replace with your own secret key
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 const samlConfig = {
   entryPoint: process.env.entryPoint,
@@ -28,6 +37,7 @@ passport.use(
 
 // Initialize passport
 app.use(passport.initialize());
+app.use(passport.session());
 
 // Create the login route
 app.get("/login", passport.authenticate("saml"));
