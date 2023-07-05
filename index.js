@@ -1,10 +1,13 @@
 const express = require("express");
 const passport = require("passport");
 const SamlStrategy = require("passport-saml").Strategy;
+var bodyParser = require("body-parser");
 require("dotenv").config();
 
 const app = express();
 
+app.use(bodyParser.json({ limit: "5mb" }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const samlConfig = {
   entryPoint: process.env.entryPoint,
