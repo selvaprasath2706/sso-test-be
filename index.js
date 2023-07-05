@@ -22,7 +22,8 @@ const samlConfig = {
   entryPoint: process.env.entryPoint,
   issuer: process.env.issuer,
   callbackUrl: process.env.callbackUrl,
-  cert:process.env.cert
+  cert: process.env.cert,
+  passReqToCallback:true
 };
 
 passport.serializeUser((user, done) => {
