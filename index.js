@@ -41,6 +41,11 @@ app.post(
   }
 );
 
+app.get("/login/error",  (req, res) => {
+  res.send("You have reached the error route!");
+});
+
+
 // Create a protected route
 app.get("/protected", ensureAuthenticated, (req, res) => {
   res.send("You have accessed the protected route!");
