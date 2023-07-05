@@ -44,17 +44,18 @@ passport.use(
   new SamlStrategy(samlConfig, (profile, done) => {
     // You can access the user profile data returned by the SAML response
     console.log("profile",profile);
-    const user = {
-      id: profile.nameID,
-      displayName:
-        profile["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"],
-      email:
-        profile[
-          "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"
-        ],
-      // ... other user attributes
-    };
-    return done(null, user);
+    // const user = {
+    //   id: profile.nameID,
+    //   displayName:
+    //     profile["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"],
+    //   email:
+    //     profile[
+    //       "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"
+    //     ],
+    //   // ... other user attributes
+    // };
+    // return done(null, user);
+    res.send("Success")
   })
 );
 
