@@ -25,12 +25,23 @@ const samlConfig = {
   cert:process.env.cert
 };
 
+passport.serializeUser((user, done) => {
+  // Serialize user into session
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  // Fetch user from database or other data source based on the user ID
+  const user = getUserById(id);
+  done(null, user);
+});
+
 
 // Configure passport with the SAML strategy
 passport.use(
   new SamlStrategy(samlConfig, (profile, done) => {
     // You can access the user profile data returned by the SAML response
-    console.log(profile);
+    console.log("profile",profile);
     return done(null, profile);
   })
 );
