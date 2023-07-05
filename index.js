@@ -35,7 +35,9 @@ passport.deserializeUser((id, done) => {
   const user = getUserById(id);
   done(null, user);
 });
-
+// Initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Configure passport with the SAML strategy
 passport.use(
@@ -46,9 +48,7 @@ passport.use(
   })
 );
 
-// Initialize passport
-app.use(passport.initialize());
-app.use(passport.session());
+
 
 // Create the login route
 app.get("/login", passport.authenticate("saml"));
