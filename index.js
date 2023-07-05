@@ -36,7 +36,8 @@ app.post(
   (req, res) => {
     console.log("success callback")
     // Authentication succeeded, redirect to a success page or perform further actions
-    res.redirect("/login/success");
+    res.send("Welcome you have been logged in")
+    // res.redirect("/login/success");
   }
 );
 
