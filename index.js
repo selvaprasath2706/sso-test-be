@@ -10,6 +10,7 @@ const samlConfig = {
   entryPoint: process.env.entryPoint,
   issuer: process.env.issuer,
   callbackUrl: process.env.callbackUrl,
+  cert:process.env.cert
 };
 
 
@@ -33,6 +34,7 @@ app.post(
   "/auth/callback",
   passport.authenticate("saml", { failureRedirect: "/login/error" }),
   (req, res) => {
+    console.log("success callback")
     // Authentication succeeded, redirect to a success page or perform further actions
     res.redirect("/login/success");
   }
@@ -41,6 +43,10 @@ app.post(
 // Create a protected route
 app.get("/protected", ensureAuthenticated, (req, res) => {
   res.send("You have accessed the protected route!");
+});
+
+app.get("/sample", (req, res) => {
+  res.send("You have reached sample route");
 });
 
 // Middleware to ensure the user is authenticated
@@ -52,6 +58,6 @@ function ensureAuthenticated(req, res, next) {
 }
 
 // Start the server
-app.listen(3000, () => {
+app.listen(3001, () => {
   console.log("Server is running on port 3000");
 });
