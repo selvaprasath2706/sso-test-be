@@ -49,8 +49,8 @@ app.use(passport.session());
 passport.use(
   new SamlStrategy(samlConfig, (profile, done) => {
     // You can access the user profile data returned by the SAML response
-    const token = profile.getAssertionXml();
-    console.log("profile", profile, token);
+    // const token = profile.getAssertionXml();
+    // console.log("profile", profile, token);
     const user = {
       id: profile.nameID,
       displayName:
@@ -64,8 +64,6 @@ passport.use(
   })
 );
 
-
-
 // Create the login route
 app.get("/login", passport.authenticate("saml"));
 
@@ -74,15 +72,23 @@ app.post(
   "/auth/callback",
   passport.authenticate("saml", { failureRedirect: "/login/error" }),
   (req, res) => {
-    console.log("success callback")
+    console.log("success callback here", req);
     // Authentication succeeded, redirect to a success page or perform further actions
-    res.send("Welcome you have been logged in")
-    // res.redirect("/login/success");
+    res.redirect("/login/success");
   }
 );
 
-app.get("/login/error",  (req, res) => {
+app.get("/login/error", (req, res) => {
   res.send("You have reached the error route!");
+});
+
+app.get("/login/success", (req, res) => {
+  console.log("success at the login", req);
+  res.send("Welcome you have been logged in");
+});
+
+app.get("/", (req, res) => {
+  res.send("Welcome to Test sso");
 });
 
 
