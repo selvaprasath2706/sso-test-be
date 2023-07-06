@@ -30,9 +30,10 @@ passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-passport.deserializeUser((user, done) => {
+passport.deserializeUser((id, done) => {
   // Fetch user from database or other data source based on the user ID
   // const user = getUserById(id);
+  const user = { id: id,name:"Selva" };
   done(null, user);
 });
 // Initialize passport
@@ -41,8 +42,9 @@ app.use(passport.session());
 
 // Configure passport with the SAML strategy
 passport.use(
-  new SamlStrategy(samlConfig, (token,profile, done) => {
+  new SamlStrategy(samlConfig, (profile, done) => {
     // You can access the user profile data returned by the SAML response
+    const token = profile.getAssertionXml();
     console.log("profile", profile, token);
     const user = {
       id: profile.nameID,
@@ -52,7 +54,6 @@ passport.use(
         profile[
           "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"
         ],
-      // ... other user attributes
     };
     return done(null, user);
   })
