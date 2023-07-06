@@ -30,12 +30,17 @@ passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-passport.deserializeUser((id, done) => {
-  // Fetch user from database or other data source based on the user ID
-  // const user = getUserById(id);
-  const user = { id: id,name:"Selva" };
+// passport.deserializeUser((id, done) => {
+//   // Fetch user from database or other data source based on the user ID
+//   // const user = getUserById(id);
+//   const user = { id: id,name:"Selva" };
+//   done(null, user);
+// });
+passport.deserializeUser((user, done) => {
+  // Step 7: Deserialize user from session
   done(null, user);
 });
+
 // Initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
