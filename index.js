@@ -30,20 +30,20 @@ passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-// passport.deserializeUser((id, done) => {
-//   // Fetch user from database or other data source based on the user ID
-//   const user = getUserById(id);
-//   done(null, user);
-// });
+passport.deserializeUser((user, done) => {
+  // Fetch user from database or other data source based on the user ID
+  // const user = getUserById(id);
+  done(null, user);
+});
 // Initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Configure passport with the SAML strategy
 passport.use(
-  new SamlStrategy(samlConfig, (profile, done) => {
+  new SamlStrategy(samlConfig, (token,profile, done) => {
     // You can access the user profile data returned by the SAML response
-    console.log("profile",profile);
+    console.log("profile", profile, token);
     const user = {
       id: profile.nameID,
       displayName:
