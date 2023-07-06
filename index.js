@@ -30,11 +30,11 @@ passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-passport.deserializeUser((id, done) => {
-  // Fetch user from database or other data source based on the user ID
-  const user = getUserById(id);
-  done(null, user);
-});
+// passport.deserializeUser((id, done) => {
+//   // Fetch user from database or other data source based on the user ID
+//   const user = getUserById(id);
+//   done(null, user);
+// });
 // Initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
