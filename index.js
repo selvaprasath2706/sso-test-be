@@ -73,7 +73,9 @@ app.post(
   "/auth/callback",
   passport.authenticate("saml", { failureRedirect: "/login/error" }),
   (req, res) => {
-    // console.log("success callback here", req);
+    // console.log("success callback here", req); 
+     var cookie = req.getcookie();
+     console.log("cookie", cookie);
     // Authentication succeeded, redirect to a success page or perform further actions
     res.redirect("/login/success");
   }
