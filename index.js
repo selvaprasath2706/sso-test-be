@@ -60,6 +60,7 @@ passport.use(
           "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"
         ],
     };
+    console.log("user val", user);
     return done(null, user);
   })
 );
@@ -72,7 +73,7 @@ app.post(
   "/auth/callback",
   passport.authenticate("saml", { failureRedirect: "/login/error" }),
   (req, res) => {
-    console.log("success callback here", req);
+    // console.log("success callback here", req);
     // Authentication succeeded, redirect to a success page or perform further actions
     res.redirect("/login/success");
   }
@@ -83,7 +84,7 @@ app.get("/login/error", (req, res) => {
 });
 
 app.get("/login/success", (req, res) => {
-  console.log("success at the login", req);
+  // console.log("success at the login", req);
   res.send("Welcome you have been logged in");
 });
 
