@@ -4,8 +4,10 @@ const SamlStrategy = require("passport-saml").Strategy;
 var bodyParser = require("body-parser");
 require("dotenv").config();
 const session = require("express-session");
+const cors = require("cors");
 
 const app = express();
+app.use(cors());
 
 app.use(bodyParser.json({ limit: "5mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -26,16 +28,9 @@ const samlConfig = {
 };
 
 passport.serializeUser((user, done) => {
-  // Serialize user into session
   done(null, user.id);
 });
 
-// passport.deserializeUser((id, done) => {
-//   // Fetch user from database or other data source based on the user ID
-//   // const user = getUserById(id);
-//   const user = { id: id,name:"Selva" };
-//   done(null, user);
-// });
 passport.deserializeUser((user, done) => {
   // Step 7: Deserialize user from session
   done(null, user);
@@ -61,6 +56,10 @@ passport.use(
         ],
     };
     console.log("user val", user);
+    //  const expectedIssuer = process.env.issuer;
+    //  if (profile.issuer !== expectedIssuer) {
+    //    return done(new Error("Invalid SAML response issuer"));
+    //  }
     return done(null, user);
   })
 );
@@ -74,10 +73,10 @@ app.post(
   passport.authenticate("saml", { failureRedirect: "/login/error" }),
   (req, res) => {
     // console.log("success callback here", req); 
-     var cookie = req.getcookie();
-     console.log("cookie", cookie);
+    res.cookie("newuser", "abcdnjj");
     // Authentication succeeded, redirect to a success page or perform further actions
-    res.redirect("/login/success");
+    // res.redirect("/login/success");
+    res.redirect("https://sso-nine.vercel.app/");
   }
 );
 
