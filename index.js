@@ -76,7 +76,7 @@ app.post(
     res.cookie("newuser", "abcdnjj");
     // Authentication succeeded, redirect to a success page or perform further actions
     // res.redirect("/login/success");
-    res.redirect("https://sso-nine.vercel.app/");
+    res.redirect(process.env.successRedirect);
   }
 );
 
